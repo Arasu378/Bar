@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/test.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/getmethod.js"></script>
+        <script src="https://use.typekit.net/ayg4pcz.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    
+
+    <div class="container">
+        <div class="card card-container">
+        <h2 class='login_title text-center'>Login</h2>
+        <hr>
+            <form class="form-signin">
+                <span id="reauth-email" class="reauth-email"></span>
+                <p class="input_title">Email</p>
+                <input type="text" id="inputEmail" class="login_box" placeholder="abc@example.com" required autofocus>
+                <p class="input_title">Password</p>
+                <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
+                <div id="remember" class="checkbox">
+                    <label>
+                        
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary" type="submit">Login</button>
+            </form><!-- /form -->
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+    <form method="get" action="/UserList">
+    <button type="submit">User List</button>
+</form>
+<!-- <input type="button" class="btn btn-success btn-lg active" value="Get Data" onclick="UserAction()" placeholder="center">
+ -->
+  </body>
+</html>

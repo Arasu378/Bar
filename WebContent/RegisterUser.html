@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/registration.css" rel="stylesheet" media="screen">
+<title>Registration</title>
+</head>
+<body>
+ <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+         <script src="https://use.typekit.net/ayg4pcz.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <div class="container">
+             <h1 class="welcome text-center" align="center">New Registration! </h1>
+    
+        <div class="card card-container">
+        <h2 class='login_title text-center' align="left">Sign Up</h2>
+        <hr>
+            <form class="form-signin" >
+                <span id="reauth-email" class="reauth-email"></span>
+                <p class="input_title">First Name</p>
+                <input type="text" id="input_firstname" class="login_box" placeholder="First Name" required autofocus >
+                <p class="input_title">Last Name</p>
+                <input type="text" id="input_lastname" class="login_box" placeholder="Last Name" required autofocus="autofocus">
+                  <p class="input_title">Mobile Number</p>
+                <input type="number" id="input_mobile" class="login_box" placeholder="1234567890" required autofocus="autofocus">
+                <p class="input_title">Email</p>
+                <input type="text" id="input_email" class="login_box" placeholder="abc@gmail.com" required autofocus="autofocus">
+                <p class="input_title">Venue Name</p>
+                <input type="text" id="input_venuename" class="login_box" placeholder="Venue Name" required autofocus="autofocus">
+                <p class="input_title">Country</p>
+                <input type="text" id="input_country" class="login_box" placeholder="Country" required autofocus="autofocus">
+              
+                <div id="remember" class="checkbox">
+                    <label>
+                        
+                    </label>
+                </div>
+               
+                <button class="btn btn-lg btn-primary" style="color:white" type="submit" id="submit_button" onclick="register_new_one()">Register</button>
+               <p id="demo"></p>
+                 <script type="text/javascript">
+                 function register_new_one() {
+                 	event.preventDefault();
+               	 var  input_firstname= document.getElementById('input_firstname').value;
+                 var  input_lastname= document.getElementById('input_lastname').value;	 
+                 var  input_mobile= document.getElementById('input_mobile').value;	 
+                 var  input_email= document.getElementById('input_email').value;	 
+                 var  input_venuename= document.getElementById('input_venuename').value;	 
+                 var  input_country= document.getElementById('input_country').value;	 
+                 var inventory_time=0;
+                
+                 alert(input_firstname);
+                 var data = JSON.stringify({"UserFirstName": input_firstname,"UserLastName": input_lastname,
+                 	"UserMobileNumber": input_mobile,"UserEmail":input_email,"UserVenueName":input_venuename,
+                 	"UserCountry":input_country,"UserOftenInventory":"","UserInventoryTime":inventory_time,
+                 	"UserRole":"admin","ParentUserProfileId":null});
+              //  document.getElementById("demo").innerHTML ="input : "+data;
+                var xhr = new XMLHttpRequest();
+                var url = "http://localhost:8080/Bar/rest/manageUserProfile";
+                xhr.open("POST", url, true);
+            	xhr.setRequestHeader("Content-type", "application/json");
+            	xhr.send(data);
+				xhr.onreadystatechange = function (){
+					if(xhr.readyState==4 && xhr.status ==200){
+						  var json = JSON.parse(xhr.responseText);
+	                  	  document.getElementById("demo").innerHTML ="Response : "+xhr.responseText;
+	                  	  var firstone=xhr.responseText.hasOwnProperty("IsSuccess");
+	                  	var issuccess=json.IsSuccess;
+                  	  	if(issuccess){
+                  	  location.href = "index.html";
+                  	  	}else{
+                  	  alert(json.IsSuccess);
+                  	  	}
+					}else{
+						document.getElementById("demo").innerHTML ="Error occured : "+xhr.status+"Response : "+xhr.responseText;
+					}
+				}
+
+                 }
+                 </script>
+                
+            </form>
+        </div>
+    </div>
+ <div id="resultDivContainer"></div>
+
+</body>
+</html>

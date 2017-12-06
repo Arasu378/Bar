@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/test.css" rel="stylesheet" media="screen">
+    <link href="css/popupmodelbox.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/getmethod.js"></script>
+        <script src="https://use.typekit.net/ayg4pcz.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    
+
+    <div class="container">
+             <h1 class="welcome text-center" align="center">Welcome to <br> Bar Admin Panel</h1>
+    
+        <div class="card card-container">
+        <h2 class='login_title text-center' align="left">Login</h2>
+        <hr>
+            <form class="form-signin" >
+                <span id="reauth-email" class="reauth-email"></span>
+                <p class="input_title">Email</p>
+                <input type="text" id="inputEmail" class="login_box" placeholder="abc@example.com" required autofocus>
+                <p class="input_title">Password</p>
+                <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
+                <div id="remember" class="checkbox">
+                    <label>
+                        
+                    </label>
+                </div>
+                <div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Loading...</h2>
+    </div>
+    <div class="modal-body">
+      <img src="img\default.gif" id="img" style="display:none" align="top" ></img>
+     
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+
+</div>
+               
+                <button class="btn btn-lg btn-primary" style="color:white" type="submit" id="submit_button" onclick="click">Login</button>
+                
+                 <p  id="register_here" onclick="register_here_click()">Register Here!</p>
+                <p id="demo"></p>
+                <script type="text/javascript">
+                function register_here_click() {
+                	event.preventDefault();
+               	 location.href = "RegisterUser.html";
+                    //document.getElementById("demo").style.color = "red";
+                }
+           //     $('#register_here').on('register_here_click',function (event){
+                	 
+               // });
+                </script>
+                 <script type="text/javascript">
+                            
+
+                     $('#submit_button').on('click', function(event) {
+                	 event.preventDefault();
+                	 var  email= document.getElementById('inputEmail').value;
+                     var  password= document.getElementById('inputPassword').value;
+                     $('#img').show();
+                     var modal = document.getElementById('myModal');
+                     var span = document.getElementsByClassName("close")[0];
+                     modal.style.display = "block";
+                     span.onclick = function() {
+                    	    modal.style.display = "none";
+                    	}
+       	               	var xhr = new XMLHttpRequest();
+   	                  	var url = "http://localhost:8080/Bar/rest/userLogin";
+   	                  	xhr.open("POST", url, true);
+   	                  	xhr.setRequestHeader("Content-type", "application/json");
+   	                 var data = JSON.stringify({"UserEmail": email,"Password": password});
+	                  	xhr.send(data);
+   	                  	xhr.onreadystatechange = function () {
+   	                  	    if (xhr.readyState === 4 && xhr.status === 200) {
+   	                  	        var json = JSON.parse(xhr.responseText);
+   	                   //	  document.getElementById("demo").innerHTML ="Response : "+xhr.responseText;
+   	                   	  var firstone=xhr.responseText.hasOwnProperty("IsSuccess");
+   	                   	  	
+   	                   	  	var issuccess=json.IsSuccess;
+   	                   	  	if(issuccess){
+   	                   	  $('#img').hide();
+   	                   modal.style.display = "none";
+   	                   	//  var user = {'name':'John'};
+   	                   sessionStorage.setItem('user_details', JSON.stringify(xhr.responseText));
+   	                  
+   	                   var obj = JSON.parse(sessionStorage.user_details);
+   	                   	  location.href = "LandingPage.html";
+   	                   	  
+   	                   	  	}else{
+   	                   	  		$('#img').hide();
+   	                   	  modal.style.display = "none";
+   	                   	  alert(json.IsSuccess);
+   	                   	  	}
+   	                   	  	
+   	                   	
+   	                  	    }else{
+         	                   //	  document.getElementById("demo").innerHTML ="Error occured : "+xhr.status+"Response : "+xhr.responseText;
+   	                  	    }
+   	                  	};
+               
+                	
+                	});
+                </script>
+            </form><!-- /form -->
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+ <div id="resultDivContainer"></div>
+
+  </body>
+</html>
