@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.commons.codec.binary.Base64;
@@ -209,4 +210,122 @@ public class LoginClass {
 		
 		return result;
 	}
+	public static UserFirst getUserProfileByUserProfileId(int UserProfileId){
+		String query="CALL  `getUserProfileByUserProfielId`("+UserProfileId+");";
+		UserFirst response =new UserFirst();
+		System.out.println("Query : "+query);
+		Connection connection=null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			connection=DriverManager.getConnection(Constants.URL,Constants.USER,Constants.PASSWORD);
+			 java.sql.Statement st=connection.createStatement();
+			   List<User>userlist=new ArrayList<User>();
+			   userlist.clear();
+
+			   ResultSet rs=st.executeQuery(query);
+			   while(rs.next()){
+				   User user1=new User();
+				   int  Id=rs.getInt(DatabaseKey.id);
+				   int userProfileId=rs.getInt(DatabaseKey.userprofileid);
+				   String UserFirstName=rs.getString(DatabaseKey.userfirstname);
+				   if(UserFirstName==null){
+					   UserFirstName="";
+				   }
+				   String UserLastName=rs.getString(DatabaseKey.userlastname);
+				   if(UserLastName==null){
+					   UserLastName="";
+				   }
+				   String UserMobileNumber=rs.getString(DatabaseKey.usermobilenumber);
+				   if(UserMobileNumber==null){
+					   UserMobileNumber="";
+				   }
+				   String UserEmail=rs.getString(DatabaseKey.useremail);
+				   if(UserEmail==null){
+					   UserEmail="";
+				   }
+				   String UserVenueName=rs.getString(DatabaseKey.uservenuename);
+				   if(UserVenueName==null){
+					   UserVenueName="";
+				   }
+				   String UserCountry=rs.getString(DatabaseKey.usercountry);
+				   if(UserCountry==null){
+					   UserCountry="";
+				   }
+				   String UserOftenInventory=rs.getString(DatabaseKey.userofteninventory);
+				   if(UserOftenInventory==null){
+					   UserOftenInventory="";
+				   }
+				   int UserInventoryTime=rs.getInt(DatabaseKey.userinventorytime);
+				  String UserLastLogin=rs.getString(DatabaseKey.userlastlogin);
+				  if(UserLastLogin==null){
+					  UserLastLogin="";
+				  }
+				  boolean IsActive=rs.getBoolean(DatabaseKey.isactive);
+				  String CreatedOn=rs.getString(DatabaseKey.createdon);
+				  if(CreatedOn==null){
+					  CreatedOn="";
+				  }
+				  String ModifiedOn=rs.getString(DatabaseKey.modifiedon);
+				  if(ModifiedOn==null){
+					  ModifiedOn="";
+				  }
+				  String Password=rs.getString(DatabaseKey.password);
+				  if(Password==null){
+					  Password="";
+				  }
+				  String UserRole=rs.getString(DatabaseKey.userrole);
+				  if(UserRole==null){
+					  UserRole="admin";
+				  }
+				  String ParentUserProfileId=rs.getString(DatabaseKey.parentuserprofileid);
+				  if(ParentUserProfileId==null){
+					  ParentUserProfileId="null";
+				  }
+				  String authorizationKey=rs.getString(DatabaseKey.USER_AUTHORIZATION_KEY);
+				  if(authorizationKey==null){
+					  authorizationKey="";
+				  }
+				  user1.setAuthorizationKey(authorizationKey);
+				   user1.setId(Id);
+				   user1.setUserProfileId(UserProfileId);
+				   user1.setUserFirstName(UserFirstName);
+				   user1.setUserLastName(UserLastName);
+				   user1.setUserMobileNumber(UserMobileNumber);
+				   user1.setUserEmail(UserEmail);
+				   user1.setUserVenueName(UserVenueName);
+				   user1.setUserCountry(UserCountry);
+				   user1.setUserOftenInventory(UserOftenInventory);
+				   user1.setUserInventoryTime(UserInventoryTime);
+				   user1.setUserLastLogin(UserLastLogin);
+				   user1.setIsActive(IsActive);
+				   user1.setCreatedOn(CreatedOn);
+				   user1.setModifiedOn(ModifiedOn);
+				   user1.setPassword(Password);
+				   user1.setUserRole(UserRole);
+				   user1.setParentUserProfileId(ParentUserProfileId);
+				   userlist.add(user1);
+				 				   
+			   }
+			   if(userlist!=null &&userlist.size()!=0){
+				   response.setIsSuccess(true);
+				   response.setMessage("success");
+				   response.setUserList(userlist);
+			   }else{
+				   response.setIsSuccess(false);
+				   response.setMessage("List is empty or null");
+				   response.setUserList(null);
+			   }
+	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return response;
+		
+	}
+
 }
