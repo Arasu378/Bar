@@ -94,7 +94,7 @@ public class InsertUserLiquorClass {
 			 	double maxvalue=Double.parseDouble(maxvalue1);
 
 			 		CallableStatement callstatement=null;
-			 		String insertso="{CALL insert_user_custombottle(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+			 		String insertso="{CALL insert_user_custombottle(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	
 				connection=DriverManager.getConnection(Constants.URL,Constants.USER,Constants.PASSWORD);
 				try{
@@ -122,10 +122,10 @@ public class InsertUserLiquorClass {
 					callstatement.setString(14, createdon);
 					callstatement.setDouble(15, minvalue);
 					callstatement.setDouble(16, maxvalue);
-//					InputStream myInputStream = new ByteArrayInputStream(valueinputstream); 
+					InputStream myInputStream = new ByteArrayInputStream(valueinputstream); 
 //
-//					callstatement.setBinaryStream(17, myInputStream);
-					callstatement.setString(17, type);
+					callstatement.setBinaryStream(17, myInputStream);
+					callstatement.setString(18, type);
 
 					// execute insertDBUSER store procedure
 //					callstatement.executeUpdate();
